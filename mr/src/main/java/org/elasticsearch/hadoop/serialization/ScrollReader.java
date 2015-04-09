@@ -163,6 +163,9 @@ public class ScrollReader {
 
         try {
             return read(copy);
+        } catch (IllegalArgumentException e) {
+            log.error("IllegalArgumentException: " + e.getMessage() + "\nContent:\n" + copy);
+            return (List<Object[]>) new ArrayList<Object[]>();
         } finally {
             parser.close();
         }

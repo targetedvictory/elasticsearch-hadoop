@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -88,6 +89,7 @@ public class JdkTypeToJsonTest {
     @BeforeClass
     public static void beforeClass() {
         out = new FastByteArrayOutputStream();
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
     @Before
@@ -211,7 +213,7 @@ public class JdkTypeToJsonTest {
     @Test
     public void testDate() {
         Date d = new Date(0);
-        assertThat(jdkTypeToJson(d), containsString(new SimpleDateFormat("YYYY-MM-DD").format(d)));
+        assertThat(jdkTypeToJson(d), containsString(new SimpleDateFormat("YYYY-MM-dd").format(d)));
     }
 
     @Test
@@ -219,14 +221,14 @@ public class JdkTypeToJsonTest {
         Date d = new Date(0);
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
-        assertThat(jdkTypeToJson(cal), containsString(new SimpleDateFormat("YYYY-MM-DD").format(d)));
+        assertThat(jdkTypeToJson(cal), containsString(new SimpleDateFormat("YYYY-MM-dd").format(d)));
     }
 
     @Test
     public void testTimestamp() {
         Date d = new Date(0);
         Timestamp ts = new Timestamp(0);
-        assertThat(jdkTypeToJson(ts), containsString(new SimpleDateFormat("YYYY-MM-DD").format(d)));
+        assertThat(jdkTypeToJson(ts), containsString(new SimpleDateFormat("YYYY-MM-dd").format(d)));
     }
 
     @Test(expected = EsHadoopSerializationException.class)
